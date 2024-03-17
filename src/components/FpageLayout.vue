@@ -12,7 +12,7 @@
             </div>
         </header>
         <div v-if="isSignIn">
-            <h1>สวัสดี{{ userType }}: {{ user }}</h1>
+            <h1>สวัสดี {{ userType }}: {{ user }}</h1>
             <br>
             <div id="content">
                 <Student v-if="isStudent" />
@@ -57,9 +57,9 @@ const handleSignIn = () => {
                 isAdmin.value = false;
             }
 
+            localStorage.setItem('userRole', isAdmin.value ? 'admin' : 'student');
             localStorage.setItem('user', JSON.stringify(user.value));
             localStorage.setItem('isSignIn', JSON.stringify(isSignIn.value));
-            localStorage.setItem('isAdmin', JSON.stringify(isAdmin.value));
         }).catch((error) => {
             console.log(error)
         });
@@ -74,7 +74,7 @@ const handleSignOut = () => {
         // Clear authentication status from browser storage
         localStorage.removeItem('user');
         localStorage.removeItem('isSignIn');
-        localStorage.removeItem('isAdmin');
+        localStorage.removeItem('userRole');
     }).catch((error) => {
         console.log(error)
     });
@@ -83,12 +83,13 @@ const handleSignOut = () => {
 onMounted(() => {
     const savedUser = localStorage.getItem('user');
     const savedIsSignIn = localStorage.getItem('isSignIn');
-    const savedIsAdmin = localStorage.getItem('isAdmin');
+    const savedUserRole = localStorage.getItem('userRole');
 
-    if (savedUser && savedIsSignIn && savedIsAdmin) {
+    if (savedUser && savedIsSignIn && savedUserRole) {
         user.value = JSON.parse(savedUser);
         isSignIn.value = JSON.parse(savedIsSignIn);
-        isAdmin.value = JSON.parse(savedIsAdmin);
+        isAdmin.value = savedUserRole === 'admin';
+        isStudent.value = savedUserRole === 'student';
     }
 });
 </script>
