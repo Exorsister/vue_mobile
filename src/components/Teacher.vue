@@ -13,12 +13,10 @@
       <button @click="Check" class="btn btn-success">เช็คชื่อ</button>
     </div>
 
-    
-
     <div class="button-container">
       <button @click="ShowStudentData" class="btn btn-warning">แสดงรายการการเช็คชื่อ</button>
       <div v-if="studentData.length">
-        <button @click="Check" class="btn btn-success" style="margin-left: 500px;">เพิ่ม</button>
+        <button @click="showAddForm = true" class="btn btn-success" style="margin-left: 500px;">เพิ่ม</button>
         <h2>รายการนักเรียน</h2>
         <table class="table table-striped table-bordered">
           <thead class="thead-dark">
@@ -56,6 +54,15 @@
         </li>
       </ul>
     </div>
+
+    <div v-if="showAddForm" class="add-student-form">
+  <h2>เพิ่มข้อมูลนักเรียน</h2>
+  <input type="text" v-model="newStudent.id" placeholder="รหัสนักเรียน">
+  <input type="text" v-model="newStudent.name" placeholder="ชื่อนักเรียน">
+  <input type="email" v-model="newStudent.email" placeholder="อีเมล">
+  <input type="text" v-model="newStudent.section" placeholder="Sec">
+  <button @click="addStudent" class="btn btn-primary">บันทึก</button>
+</div>
   </div>
 </template>
 
@@ -73,9 +80,16 @@ export default {
       userData: null,
       checkinData: [],
       studentData: [], // เพิ่มตัวแปรนี้สำหรับเก็บข้อมูลนักเรียน
-
+      showAddForm: false, // เพิ่มตัวแปรนี้
+    newStudent: { // เพิ่มตัวแปรนี้เพื่อเก็บข้อมูลของนักเรียนที่ใหม่
+      id: '',
+      name: '',
+      email: '',
+      section: ''
+    }
     }
   },
+  
   methods: {
     async fetchRandomUserData() {
         try {
@@ -137,7 +151,27 @@ export default {
       } catch (error) {
         console.error('Error fetching student data:', error);
       }
+    },
+    async addStudent() {
+    try {
+      const db = getFirestore();
+      await addDoc(collection(db, 'students'), this.newStudent);
+      console.log('Student added successfully!');
+      // ล้างข้อมูลในฟอร์มหลังจากบันทึก
+      this.newStudent = {
+        id: '',
+        name: '',
+        email: '',
+        section: ''
+      };
+      // ซ่อนฟอร์ม
+      this.showAddForm = false;
+      // โหลดข้อมูลนักเรียนใหม่
+      this.fetchStudentData();
+    } catch (error) {
+      console.error('Error adding student:', error);
     }
+  }
   }
 }
 </script>
