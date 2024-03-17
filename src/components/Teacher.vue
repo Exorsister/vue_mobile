@@ -13,29 +13,33 @@
       <button @click="Check" class="btn btn-success">เช็คชื่อ</button>
     </div>
 
+    
+
     <div class="button-container">
       <button @click="ShowStudentData" class="btn btn-warning">แสดงรายการการเช็คชื่อ</button>
       <div v-if="studentData.length">
-      <h2>รายการนักเรียน</h2>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>รหัส</th>
-            <th>ชื่อ</th>
-            <th>Email</th>
-            <th>Sec</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(students, index) in studentData" :key="index">
-            <td>{{ students.id }}</td>
-            <td>{{ students.name }}</td>
-            <td>{{ students.email }}</td>
-            <td>{{ students.section }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+        <button @click="Check" class="btn btn-success" style="margin-left: 500px;">เพิ่ม</button>
+        <h2>รายการนักเรียน</h2>
+        <table class="table table-striped table-bordered">
+          <thead class="thead-dark">
+            <tr>
+              <th>รหัส</th>
+              <th>ชื่อ</th>
+              <th>Email</th>
+              <th>Sec</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(student, index) in studentData" :key="index">
+              <td>{{ student.id }}</td>
+              <td>{{ student.name }}</td>
+              <td>{{ student.email }}</td>
+              <td>{{ student.section }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
 
     </div>
 
@@ -203,4 +207,42 @@ export default {
 .checkin-item p {
   margin: 5px 0;
 }
+
+  /* CSS สำหรับตาราง */
+  .table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+  }
+
+  .table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+
+  .table th {
+    background-color: #f2f2f2;
+  }
+
+  .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+  }
+
+  /* CSS สำหรับปุ่ม */
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+
 </style>
