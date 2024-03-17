@@ -1,9 +1,12 @@
 <template>
   <body style="display: d-flex">
     <div style="display: flex; justify-content: center; align-items: center">
-      <div
+        <div
         class="row featurette"
-        style="display: flex; justify-content: center; align-items: center"
+        style="display: flex; justify-content: center; align-items: center;
+        border: 5px ;
+        border-radius: 10px;
+      "
       >
         <div class="col-md-7">
           <h2 class="featurette-heading fw-normal lh-1">
@@ -45,7 +48,6 @@
           </svg>
         </div>
       </div>
-      
     </div>
   </body>
 </template>
