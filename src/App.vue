@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div id="app">
     <header>
+      <div class="container">
       <div id="logout" v-if="isSignIn">
         <button @click="handleSignOut">ออกจากระบบ</button>
       </div>
@@ -8,8 +9,9 @@
         <h3>Google Signin</h3>
         <button @click="handleSignIn">เข้าสู่ระบบ</button>
       </div>
+    </div>
     </header>
-    <div class="hello" v-if="isSignIn">
+    <div v-if="isSignIn">
       <h1>สวัสดี{{ userType }}: {{ user }}</h1>
       <br>
       <div id="content">
