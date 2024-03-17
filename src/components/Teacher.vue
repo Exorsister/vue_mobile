@@ -1,28 +1,54 @@
 <template>
   <div class="container">
-    <div class="button-container">
-      <button @click="fetchRandomUserData" class="btn btn-primary">สุ่มเช็คชื่อ</button>
-    </div>
+    <!-- <div class="button-container">
+      <button   @click="fetchRandomUserData" class="btn btn-primary">สุ่มเช็คชื่อ</button>
 
-    <div v-if="userData" class="user-data">
-      <p><strong>ID:</strong> {{ userData.stdID }}</p>
+    </div> -->
+
+    <div v-if="userData"  class="checkin-item">
+      <p><strong>ID:</strong> {{ students.id }}</p>
       <p><strong>Email:</strong> {{ userData.email }}</p>
       <p><strong>Name:</strong> {{ userData.name }}</p>
+      <!-- <p><strong>Sec:</strong> {{ userData.section }}</p> -->
       <button @click="Check" class="btn btn-success">เช็คชื่อ</button>
     </div>
 
     <div class="button-container">
-      <button @click="CheckList" class="btn btn-warning">แสดงรายการการเช็คชื่อ</button>
+      <button @click="ShowStudentData" class="btn btn-warning">แสดงรายการการเช็คชื่อ</button>
+      <div v-if="studentData.length">
+      <h2>รายการนักเรียน</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>รหัส</th>
+            <th>ชื่อ</th>
+            <th>Email</th>
+            <th>Sec</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(students, index) in studentData" :key="index">
+            <td>{{ students.id }}</td>
+            <td>{{ students.name }}</td>
+            <td>{{ students.email }}</td>
+            <td>{{ students.section }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
     </div>
 
     <div v-if="checkinData.length" class="checkin-data">
       <h2>รายการการเช็คชื่อ</h2>
       <ul>
         <li v-for="(data, index) in checkinData" :key="index" class="checkin-item">
-          <p><strong>StdID:</strong> {{ data.stdID }}</p>
-          <p><strong>Class Date:</strong> {{ data.class_date }}</p>
+          <p><strong>StdID:</strong> {{userData.stdid }}</p>
+          <p><strong>E-mail:</strong> {{userData.email }}</p>
+          <p><strong>Name:</strong> {{userData.name }}</p>
+          <!-- <p><strong>Class Date:</strong> {{ data.class_date }}</p>
           <p><strong>Room:</strong> {{ data.room }}</p>
-          <p><strong>Subject:</strong> {{ data.subject }}</p>
+          <p><strong>Subject:</strong> {{ data.subject }}</p> -->
         </li>
       </ul>
     </div>
@@ -42,23 +68,26 @@ export default {
     return {
       userData: null,
       checkinData: [],
+      studentData: [], // เพิ่มตัวแปรนี้สำหรับเก็บข้อมูลนักเรียน
+
     }
   },
   methods: {
     async fetchRandomUserData() {
-      try {
-        const db = getFirestore();
-        const querySnapshot = await getDocs(collection(db, 'students'));
-        const documents = [];
-        querySnapshot.forEach((doc) => {
-          documents.push({ id: doc.id, stdID: doc.data().stdID, email: doc.data().email, name: doc.data().name });
-        });
-        const randomIndex = Math.floor(Math.random() * documents.length);
-        this.userData = documents[randomIndex];
-      } catch (error) {
-        console.error('Error fetching random user data:', error);
-      }
-    },
+        try {
+          const db = getFirestore();
+          const querySnapshot = await getDocs(collection(db, 'students'));
+          const documents = [];
+          querySnapshot.forEach((doc) => {
+            documents.push({ id: doc.id, stdID: doc.data().stdID, email: doc.data().email, name: doc.data().name });
+          });
+          const randomIndex = Math.floor(Math.random() * documents.length);
+          this.userData = documents[randomIndex];
+        } catch (error) {
+          console.error('Error fetching random user data:', error);
+        }
+      },
+
     async Check() {
       try {
         if (!this.userData || !this.userData.stdID) {
@@ -67,12 +96,12 @@ export default {
         }
         const db = getFirestore();
         const collectorData = {
-          stdID: this.userData.stdID,
+          stdID: this.students.id,
           class_date: serverTimestamp(),
           room: "SC6969",
           subject: "CP9999"
         };
-        const docRef = await addDoc(collection(db, 'checkin'), collectorData);
+        const docRef = await addDoc(collection(db, 'students'), collectorData);
         console.log('Document written with ID: ', docRef.id);
         this.collectorData = { id: docRef.id, ...collectorData };
       } catch (error) {
@@ -82,7 +111,7 @@ export default {
     async CheckList() {
       try {
         const db = getFirestore();
-        const querySnapshot = await getDocs(collection(db, 'checkin'));
+        const querySnapshot = await getDocs(collection(db, 'students'));
         const documents = [];
         querySnapshot.forEach((doc) => {
           documents.push({ id: doc.id, ...doc.data() });
@@ -90,6 +119,19 @@ export default {
         this.checkinData = documents;
       } catch (error) {
         console.error('Error fetching checkin data:', error);
+      }
+    },
+    async ShowStudentData() {
+      try {
+        const db = getFirestore();
+        const querySnapshot = await getDocs(collection(db, 'students'));
+        const documents = [];
+        querySnapshot.forEach((doc) => {
+          documents.push({ id: doc.id, ...doc.data() });
+        });
+        this.studentData = documents;
+      } catch (error) {
+        console.error('Error fetching student data:', error);
       }
     }
   }
