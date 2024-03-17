@@ -3,7 +3,6 @@ import FpageLayout from './components/FpageLayout.vue';
 </script>
 
 <template>
-  <div id="app">
+  <div id="app" class="mb-0"></div>
     <FpageLayout />
-  </div>
 </template>

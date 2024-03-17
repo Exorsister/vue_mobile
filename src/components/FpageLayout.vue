@@ -1,18 +1,10 @@
 <template>
     <div>
         <header>
-            <div class="container">
-                <div id="logout" v-if="isSignIn">
-                    <button @click="handleSignOut">ออกจากระบบ</button>
-                </div>
-                <div id="GoogleSignin" v-else>
-                    <h3>Google Signin</h3>
-                    <button @click="handleSignIn">เข้าสู่ระบบ</button>
-                </div>
-            </div>
+            
         </header>
         <div v-if="isSignIn">
-            <h1>สวัสดี {{ userType }}: {{ user }}</h1>
+            <h1 style="display: flex; justify-content: center; align-items: center; ">สวัสดี {{ userType }}: {{ user }}</h1>
             <br>
             <div id="content">
                 <Student v-if="isStudent" />
@@ -20,6 +12,17 @@
             </div>
             <br>
         </div>
+        <div class="container">
+                <div id="logout" style="display: flex; justify-content: center; align-items: center;" v-if="isSignIn">
+                    <button @click="handleSignOut"  style="margin-left: 10px; border: 2px solid red; border-radius: 5px; padding: 5px 15px; background-color: red; color: white;">ออกจากระบบ</button>
+                </div>
+                <div id="GoogleSignin" v-else class="d-flex  align-items-center"
+                style="display: flex; justify-content: center; align-items: center; height: 100vh; ">
+                <img src="https://cdn.iconscout.com/icon/free/png-256/free-google-1772223-1507807.png" alt="รูปภาพ" width="50" height="50">
+                    <h3 style="margin-left: 20px; ">Google Sign in</h3>
+                    <button @click="handleSignIn" style="margin-left: 20px; ">เข้าสู่ระบบ</button>
+                </div>
+            </div>
     </div>
 </template>
 

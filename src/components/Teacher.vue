@@ -1,6 +1,6 @@
 <template>
-    <div>
-      <button @click="fetchRandomUserData">สุ่มเช็คชื่อ</button>
+    <div style="display: flex; justify-content: center; align-items: center; ">
+      <button @click="fetchRandomUserData" style=" border: 2px solid #007bff; border-radius: 5px; padding: 5px 15px; background-color: #007bff; color: white;">สุ่มเช็คชื่อ</button>
       <div v-if="userData">
         <p>ID: {{ userData.stdID }}</p>
         <p>Email: {{ userData.email }}</p>
@@ -8,7 +8,8 @@
         <button @click="Check">เช็คชื่อ</button>
       </div>
       <div>
-        <button @click="CheckList">แสดงรายการการเช็คชื่อ</button>
+        <button @click="CheckList" style="margin-left: 10px; border: 2px solid #FFC300; border-radius: 5px; padding: 5px 15px; background-color: #FFC300; color: black;">แสดงรายการการเช็คชื่อ</button>
+
         <div v-if="checkinData.length">
           <h2>รายการการเช็คชื่อ</h2>
           <ul>
