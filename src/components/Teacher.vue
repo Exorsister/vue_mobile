@@ -14,9 +14,10 @@
     </div>
 
     <div class="button-container">
-      <button @click="ShowStudentData" class="btn btn-warning">แสดงรายการการเช็คชื่อ</button>
+      <button @click="ShowStudentData" class="btn btn-warning">แสดงรายชื่อทั้งหมด</button>
       <div v-if="studentData.length">
         <button @click="showAddForm = true" class="btn btn-success" style="margin-left: 500px;">เพิ่ม</button>
+        <button @click="showAddForm = true" class="btn btn-success">ย้อนกลับ</button>
         <h2>รายการนักเรียน</h2>
         <table class="table table-striped table-bordered">
           <thead class="thead-dark">
