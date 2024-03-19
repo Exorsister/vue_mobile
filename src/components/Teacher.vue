@@ -5,12 +5,8 @@
 
     </div> -->
 
-    <div v-if="userData"  class="checkin-item">
-      <p><strong>ID:</strong> {{ students.id }}</p>
-      <p><strong>Email:</strong> {{ userData.email }}</p>
-      <p><strong>Name:</strong> {{ userData.name }}</p>
-      <!-- <p><strong>Sec:</strong> {{ userData.section }}</p> -->
-      <button @click="Check" class="btn btn-success">เช็คชื่อ</button>
+    <div class="button-container">
+      <button @click="Check" class="btn btn-success">สร้างห้องเพื่อเช็คชื่อ</button>
     </div>
 
     <div class="button-container">
