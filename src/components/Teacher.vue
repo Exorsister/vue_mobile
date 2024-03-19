@@ -75,7 +75,7 @@ import { addDoc, serverTimestamp } from 'firebase/firestore';
 firebaseConfig
 
 export default {
-  name: 'HelloWorld',
+  name: 'Teacher',
   data() {
     return {
       userData: null,
