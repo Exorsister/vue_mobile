@@ -5,18 +5,15 @@
 
     </div> -->
 
-    <div v-if="userData"  class="checkin-item">
-      <p><strong>ID:</strong> {{ students.id }}</p>
-      <p><strong>Email:</strong> {{ userData.email }}</p>
-      <p><strong>Name:</strong> {{ userData.name }}</p>
-      <!-- <p><strong>Sec:</strong> {{ userData.section }}</p> -->
-      <button @click="Check" class="btn btn-success">เช็คชื่อ</button>
+    <div class="button-container">
+      <button @click="Check" class="btn btn-success">สร้างห้องเพื่อเช็คชื่อ</button>
     </div>
 
     <div class="button-container">
-      <button @click="ShowStudentData" class="btn btn-warning">แสดงรายการการเช็คชื่อ</button>
+      <button @click="ShowStudentData" class="btn btn-warning">แสดงรายชื่อทั้งหมด</button>
       <div v-if="studentData.length">
         <button @click="showAddForm = true" class="btn btn-success" style="margin-left: 500px;">เพิ่ม</button>
+        <button @click="showAddForm = true" class="btn btn-success">ย้อนกลับ</button>
         <h2>รายการนักเรียน</h2>
         <table class="table table-striped table-bordered">
           <thead class="thead-dark">
@@ -74,7 +71,7 @@ import { addDoc, serverTimestamp } from 'firebase/firestore';
 firebaseConfig
 
 export default {
-  name: 'HelloWorld',
+  name: 'Teacher',
   data() {
     return {
       userData: null,
